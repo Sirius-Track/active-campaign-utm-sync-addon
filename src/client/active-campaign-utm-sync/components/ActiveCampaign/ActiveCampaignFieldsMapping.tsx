@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormField } from './FormField';
 import { FieldColumns, FieldName } from './FieldColumns';
-import { Spinner } from './Spinner';
+import { Spinner } from '../Spinner';
 
-interface FetchedData {
+export interface FetchedData {
   customFields: {
     id: number;
     title: string;
@@ -15,7 +15,7 @@ interface FetchedData {
   }[];
 }
 
-interface LocalCustomFields {
+export interface LocalCustomFields {
   utm_source: string;
   utm_medium: string;
   utm_campaign: string;

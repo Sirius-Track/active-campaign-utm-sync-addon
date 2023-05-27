@@ -1,7 +1,7 @@
 import React from 'react';
-import { Spinner } from './Spinner';
+import { Spinner } from '../Spinner';
 
-interface CredentialsActiveCampaign {
+export interface CredentialsActiveCampaign {
   url: string;
   apiToken: string;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActiveCampaignModal } from './components/ActiveCampaignModal';
+import { ActiveCampaign } from './components/ActiveCampaign';
 
 export const App = () => {
-  return <ActiveCampaignModal />;
+  return <ActiveCampaign />;
 };
