@@ -1,16 +1,15 @@
 import { getContactId, getSheetColumnValues } from './active-campaign';
 import { getSheetHeaders } from './sheets';
 
-export const onOpen = () => {
-  const menu = SpreadsheetApp.getUi()
-    .createMenu('ActiveCampaign UTM Sync')
-    .addItem('Configure ActiveCampaign', 'openDialogActiveCampaign');
-
-  menu.addToUi();
+const expirationDateAlert = (UI: GoogleAppsScript.Base.Ui) => {
+  UI.alert(
+    'Seu período de uso acabo, renove a compra ou entre em contato com o suporte.'
+  );
 };
 
-export const onFormSubmit = () => {
-  const scriptProperties = PropertiesService.getScriptProperties();
+const getUTMParams = (
+  scriptProperties: GoogleAppsScript.Properties.Properties
+) => {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getActiveSheet();
   const emailColumn = scriptProperties.getProperty('emailColumn');
@@ -21,19 +20,6 @@ export const onFormSubmit = () => {
   const lastRow = sheet.getLastRow();
   const rows = sheet.getDataRange().getValues();
   const email = rows[rows.length - 1][emailColumn];
-
-  const expiration_date = new Date(
-    scriptProperties.getProperty('expiration_date')
-  );
-  const today = new Date();
-
-  if (expiration_date < today) {
-    scriptProperties.setProperty('is_expired', 'true');
-
-    return SpreadsheetApp.getUi().alert(
-      'Seu período de uso acabo, renove a compra ou entre em contato com o suporte.'
-    );
-  }
 
   const contactId = getContactId(apiUrl, apiToken, email);
 
@@ -52,6 +38,53 @@ export const onFormSubmit = () => {
     if (columnIndex > -1)
       sheet.getRange(lastRow, columnIndex + 1).setValue(columnValue);
   });
+};
+
+const isExpired = (
+  UI: GoogleAppsScript.Base.Ui,
+  scriptProperties: GoogleAppsScript.Properties.Properties
+) => {
+  const expiration_date = new Date(
+    scriptProperties.getProperty('expiration_date')
+  );
+
+  const today = new Date();
+
+  if (expiration_date < today) {
+    scriptProperties.setProperty('is_expired', 'true');
+
+    expirationDateAlert(UI);
+    return true;
+  }
+
+  return false;
+};
+
+export const onOpen = () => {
+  const UI = SpreadsheetApp.getUi();
+
+  const menu = UI.createMenu('ActiveCampaign UTM Sync').addItem(
+    'Configure ActiveCampaign',
+    'openDialogActiveCampaign'
+  );
+
+  menu.addToUi();
+
+  const scriptProperties = PropertiesService.getScriptProperties();
+
+  if (scriptProperties.getProperty('url')) {
+    if (scriptProperties.getProperty('is_expired'))
+      return expirationDateAlert(UI);
+
+    if (!isExpired(UI, scriptProperties)) getUTMParams(scriptProperties);
+  }
+};
+
+export const onFormSubmit = () => {
+  const UI = SpreadsheetApp.getUi();
+  const scriptProperties = PropertiesService.getScriptProperties();
+
+  if (!isExpired(UI, scriptProperties)) getUTMParams(scriptProperties);
 };
 
 export const openDialogActiveCampaign = () => {
