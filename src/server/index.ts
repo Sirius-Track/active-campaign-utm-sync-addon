@@ -1,16 +1,19 @@
 import { fetchData, finalizeMapping, testConnection } from './active-campaign';
-import { isCustomer } from './customer';
+import { isCustomer } from './isCustomer';
+import { openDialogActiveCampaign } from './shared/openDialogActiveCampaign';
+import { syncActiveCampaign } from './shared/syncActiveCampaign';
 import { getSheetHeaders } from './sheets';
-import { onFormSubmit, onOpen, openDialogActiveCampaign } from './ui';
+import { onFormSubmit, onOpen } from './ui';
 
 // Public functions must be exported as named exports
 export {
+  onOpen,
+  onFormSubmit,
   fetchData,
   finalizeMapping,
   getSheetHeaders,
   isCustomer,
-  onFormSubmit,
-  onOpen,
   openDialogActiveCampaign,
+  syncActiveCampaign,
   testConnection,
 };
