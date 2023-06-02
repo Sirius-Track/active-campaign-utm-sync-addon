@@ -1,5 +1,3 @@
-import { getActiveCampaignData } from './active-campaign';
-
 export const isCustomer = () => {
   const email = Session.getActiveUser().getEmail();
   const scriptProperties = PropertiesService.getScriptProperties();
@@ -37,13 +35,8 @@ export const isCustomer = () => {
       };
     }
 
-    if (
-      scriptProperties.getProperty('expiration_date') &&
-      scriptProperties.getProperty('is_expired')
-    ) {
-      getActiveCampaignData();
+    if (scriptProperties.getProperty('is_expired'))
       scriptProperties.deleteProperty('is_expired');
-    }
 
     scriptProperties.setProperty(
       'expiration_date',
