@@ -1,6 +1,5 @@
 import { createCustomColumns } from './active-campaign';
 import { isCustomer } from './isCustomer';
-import { expirationDateAlert } from './shared/expirationDateAlert';
 import { getCustomColumnFieldsToLastRow } from './shared/getCustomColumnFieldsToLastRow';
 
 export const onOpen = () => {
@@ -22,7 +21,7 @@ export const onFormSubmit = () => {
   if (scriptProperties.getProperty('url')) {
     const { isCustomer: allowed } = isCustomer();
 
-    if (!allowed) return expirationDateAlert();
+    if (!allowed) return;
 
     createCustomColumns();
 

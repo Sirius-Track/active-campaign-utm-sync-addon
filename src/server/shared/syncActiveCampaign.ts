@@ -1,6 +1,5 @@
 import { createCustomColumns, getActiveCampaignData } from '../active-campaign';
 import { isCustomer } from '../isCustomer';
-import { expirationDateAlert } from './expirationDateAlert';
 
 export const syncActiveCampaign = () => {
   const scriptProperties = PropertiesService.getScriptProperties();
@@ -8,7 +7,12 @@ export const syncActiveCampaign = () => {
   if (scriptProperties.getProperty('url')) {
     const { isCustomer: allowed } = isCustomer();
 
-    if (!allowed) return expirationDateAlert();
+    if (!allowed) {
+      SpreadsheetApp.getUi().alert(
+        'Seu período de uso acabou, renove a compra ou entre em contato com o suporte.'
+      );
+      return;
+    }
 
     createCustomColumns();
 
