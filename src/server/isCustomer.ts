@@ -27,16 +27,12 @@ export const isCustomer = () => {
       new Date(json.customer.expiration_date).getTime() - Date.now();
 
     if (expirationDate <= 0) {
-      scriptProperties.setProperty('is_expired', 'true');
       return {
         message:
           'Seu período de uso acabo, renove a compra ou entre em contato com o suporte.',
         isCustomer: false,
       };
     }
-
-    if (scriptProperties.getProperty('is_expired'))
-      scriptProperties.deleteProperty('is_expired');
 
     scriptProperties.setProperty(
       'expiration_date',
