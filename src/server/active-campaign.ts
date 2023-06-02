@@ -1,3 +1,4 @@
+import { getCustomColumnFieldValues } from './shared/getCustomColumnFieldValues';
 import { getSheetHeaders } from './sheets';
 
 export const createCustomColumns = () => {
@@ -44,7 +45,7 @@ export const getContactId = (
   return null;
 };
 
-const getCustomFieldValues = (
+const getClientCustomFieldValues = (
   apiUrl: string,
   apiToken: string,
   contactId: string
@@ -77,7 +78,7 @@ export const getSheetColumnValues = ({
   contactId: string;
   scriptProperties: GoogleAppsScript.Properties.Properties;
 }) => {
-  const fieldValues = getCustomFieldValues(apiUrl, apiToken, contactId);
+  const fieldValues = getClientCustomFieldValues(apiUrl, apiToken, contactId);
 
   try {
     const savedFields = scriptProperties.getProperties();
@@ -88,13 +89,13 @@ export const getSheetColumnValues = ({
     return customColumnKeys.map((customColumnKey) => {
       const fieldId = savedFields[customColumnKey];
 
-      const fieldValue = fieldValues.find((fieldValue) => {
-        return fieldValue.field === fieldId;
-      });
+      const fieldValue = fieldValues.find(
+        (fieldValue) => fieldValue.field === fieldId
+      );
 
       return {
         fieldName: customColumnKey,
-        fieldValue: fieldValue ? fieldValue.value : '',
+        fieldValue: fieldValue ? fieldValue.value : 'Empty',
       };
     });
   } catch (error) {
@@ -105,36 +106,35 @@ export const getSheetColumnValues = ({
 
 export const getActiveCampaignData = () => {
   const scriptProperties = PropertiesService.getScriptProperties();
-  const apiUrl = scriptProperties.getProperty('url');
-  const apiToken = scriptProperties.getProperty('apiToken');
-  const emailColumn = scriptProperties.getProperty('emailColumn');
-
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getActiveSheet();
-  const data = sheet.getDataRange().getValues().slice(1);
   const headers = getSheetHeaders();
 
-  for (let i = 0; i < data.length; i++) {
-    const email = data[i][emailColumn];
-    const contactId = getContactId(apiUrl, apiToken, email);
+  const rows = sheet.getDataRange().getValues().slice(1);
+  const rowsWithMissingValues = [];
 
-    if (!contactId) continue;
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const hasMissingValue = row.some((value) => value === '');
+    if (hasMissingValue) rowsWithMissingValues.push({ row, index: i });
+  }
 
-    const customColumnFieldValues = getSheetColumnValues({
-      apiUrl,
-      apiToken,
-      contactId,
-      scriptProperties,
-    });
+  rowsWithMissingValues.forEach(({ row, index }) => {
+    const email = row[scriptProperties.getProperty('emailColumn')];
+    const customColumnFieldValues = getCustomColumnFieldValues(
+      email,
+      scriptProperties
+    );
 
     customColumnFieldValues.forEach((customColumnFieldValue) => {
       const columnIndex = headers.indexOf(customColumnFieldValue.fieldName);
+
       const columnValue = customColumnFieldValue.fieldValue;
 
       if (columnIndex > -1)
-        sheet.getRange(i + 2, columnIndex + 1).setValue(columnValue);
+        sheet.getRange(index + 2, columnIndex + 1).setValue(columnValue);
     });
-  }
+  });
 };
 
 const getCustomFields = (apiUrl: string, apiToken: string) => {
