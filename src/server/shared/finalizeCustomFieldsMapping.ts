@@ -27,6 +27,10 @@ export const finalizeCustomFieldsMapping = (formData: {
 
   updateMissingValuesWithActiveCampaignData();
 
+  SpreadsheetApp.getUi()
+    .createMenu('ActiveCampaign UTM Sync')
+    .addItem('Sync ActiveCampaign', 'syncActiveCampaign');
+
   ScriptApp.newTrigger('onFormSubmit')
     .forSpreadsheet(SpreadsheetApp.getActiveSpreadsheet())
     .onFormSubmit()
