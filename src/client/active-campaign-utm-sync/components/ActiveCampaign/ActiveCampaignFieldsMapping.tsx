@@ -60,7 +60,12 @@ export const ActiveCampaignFieldsMapping = ({
   handleFinalizeClick,
   fetchedData: { customFields, headers, listLeads },
 }: ActiveCampaignFormMappingProps) => {
-  if (isFetchingData || isFinalizingMapping) return <Spinner />;
+  if (isFetchingData || isFinalizingMapping) {
+    let msg = isFinalizingMapping
+      ? 'Estamos baixando as informações! Feche essa modal e volte mais tarde que estará tudo pronto!'
+      : 'Estamos buscando as informações! Isso pode levar um tempo dependendo do volume de dados que você tiver';
+    return <Spinner msg={msg} />;
+  }
 
   return (
     <div>
