@@ -1,5 +1,5 @@
-import { getSheetHeaders } from '../sheets';
-import { getCustomColumnFieldValues } from './getCustomColumnFieldValues';
+import { getSheetHeaders } from '../../shared/getSheetHeaders';
+import { getCustomColumnFieldValues } from '../../shared/getCustomColumnFieldValues';
 
 export const getCustomColumnFieldsToLastRow = (
   scriptProperties: GoogleAppsScript.Properties.Properties

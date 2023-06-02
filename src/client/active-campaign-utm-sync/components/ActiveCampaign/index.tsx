@@ -49,18 +49,18 @@ export const ActiveCampaign = () => {
     setIsFetchingData(true);
     try {
       const {
-        customFields = [],
-        headers = [],
-        listLeads = [],
-      } = await serverFunctions.fetchData(
+        activeCustomFields = [],
+        sheetHeaders = [],
+        leadList = [],
+      } = await serverFunctions.fetchDataToPopulate(
         credentials.url,
         credentials.apiToken
       );
 
-      setLeadList(listLeads[0]?.id || '');
+      setLeadList(leadList[0]?.id || '');
 
       fieldNames.forEach((fieldName) => {
-        const optionId = customFields.find(
+        const optionId = activeCustomFields.find(
           (field: { title: string }) => field.title === fieldName
         )?.id;
 
@@ -70,13 +70,18 @@ export const ActiveCampaign = () => {
         }));
       });
 
-      const emailHeader = headers.find((header) =>
+      const emailHeader = sheetHeaders.find((header) =>
         header.toLowerCase().includes('mail')
       );
 
-      if (emailHeader) setEmailColumn(headers.indexOf(emailHeader).toString());
+      if (emailHeader)
+        setEmailColumn(sheetHeaders.indexOf(emailHeader).toString());
 
-      setFetchedData({ customFields, headers, listLeads });
+      setFetchedData({
+        customFields: activeCustomFields,
+        headers: sheetHeaders,
+        listLeads: leadList,
+      });
       setIsFetchingData(false);
     } catch (error) {
       console.error('Erro ao inicializar listas:', error);
@@ -102,7 +107,7 @@ export const ActiveCampaign = () => {
   const handleFinalizeClick = async () => {
     setIsFinalizingMapping(true);
     try {
-      await serverFunctions.finalizeMapping({
+      await serverFunctions.finalizeCustomFieldsMapping({
         url: credentials.url,
         apiToken: credentials.apiToken,
         leadList,

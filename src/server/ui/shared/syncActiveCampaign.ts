@@ -1,5 +1,6 @@
-import { createCustomColumns, getActiveCampaignData } from '../active-campaign';
-import { isCustomer } from '../isCustomer';
+import { addCustomColumnsToSpreadSheet } from '../../shared/addCustomColumnsToSpreadSheet';
+import { updateMissingValuesWithActiveCampaignData } from '../../shared/updateMissingValuesWithActiveCampaignData';
+import { isCustomer } from '../../shared/isCustomer';
 
 export const syncActiveCampaign = () => {
   const scriptProperties = PropertiesService.getScriptProperties();
@@ -14,8 +15,8 @@ export const syncActiveCampaign = () => {
       return;
     }
 
-    createCustomColumns();
+    addCustomColumnsToSpreadSheet();
 
-    getActiveCampaignData();
+    updateMissingValuesWithActiveCampaignData();
   }
 };

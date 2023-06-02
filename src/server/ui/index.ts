@@ -1,5 +1,5 @@
-import { createCustomColumns } from './active-campaign';
-import { isCustomer } from './isCustomer';
+import { addCustomColumnsToSpreadSheet } from '../shared/addCustomColumnsToSpreadSheet';
+import { isCustomer } from '../shared/isCustomer';
 import { getCustomColumnFieldsToLastRow } from './shared/getCustomColumnFieldsToLastRow';
 
 export const onOpen = () => {
@@ -23,7 +23,7 @@ export const onFormSubmit = () => {
 
     if (!allowed) return;
 
-    createCustomColumns();
+    addCustomColumnsToSpreadSheet();
 
     getCustomColumnFieldsToLastRow(scriptProperties);
   }

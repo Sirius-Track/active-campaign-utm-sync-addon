@@ -1,5 +1,6 @@
-import { getContactId, getSheetColumnValues } from '../active-campaign';
 import { getApiUrlAndToken } from './getApiUrlAndToken';
+import { getContactId } from './getContactId';
+import { fetchSheetCustomFieldValues } from './fetchSheetCustomFieldValues';
 
 export const getCustomColumnFieldValues = (email, scriptProperties) => {
   const { apiUrl, apiToken } = getApiUrlAndToken();
@@ -8,7 +9,7 @@ export const getCustomColumnFieldValues = (email, scriptProperties) => {
 
   if (!contactId) return [];
 
-  return getSheetColumnValues({
+  return fetchSheetCustomFieldValues({
     apiUrl,
     apiToken,
     contactId,
