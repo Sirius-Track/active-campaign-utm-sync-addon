@@ -1,6 +1,6 @@
-import { getSheetHeaders } from '..';
 import { getActiveCampaignLeadList } from './getActiveCampaignLeadList';
 import { getCustomFields } from './getCustomFields';
+import { getSheetHeaders } from './getSheetHeaders';
 
 export const fetchDataToPopulate = (url: string, apiToken: string) => {
   const sheetHeaders = getSheetHeaders();
