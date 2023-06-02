@@ -18,5 +18,7 @@ export const syncActiveCampaign = () => {
     addCustomColumnsToSpreadSheet();
 
     updateMissingValuesWithActiveCampaignData();
+
+    SpreadsheetApp.getUi().alert('Sincronização concluída com sucesso.');
   }
 };
