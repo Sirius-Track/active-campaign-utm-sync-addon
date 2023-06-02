@@ -62,7 +62,7 @@ export const ActiveCampaignFieldsMapping = ({
 }: ActiveCampaignFormMappingProps) => {
   if (isFetchingData || isFinalizingMapping) {
     let msg = isFinalizingMapping
-      ? 'Estamos baixando as informações! Feche essa modal e volte mais tarde que estará tudo pronto!'
+      ? 'Estamos baixando as informações! Feche esse modal e volte mais tarde que estará tudo pronto!'
       : 'Estamos buscando as informações! Isso pode levar um tempo dependendo do volume de dados que você tiver';
     return <Spinner msg={msg} />;
   }
