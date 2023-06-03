@@ -59,7 +59,7 @@ export const FieldColumns = ({
   );
 
   return (
-    <div id="columnMapping" className="mt-4">
+    <div id="columnMapping">
       {fieldNames.map((fieldName: FieldName) => {
         const selectedOptionId = getSelectedOptionId(fieldName);
 
