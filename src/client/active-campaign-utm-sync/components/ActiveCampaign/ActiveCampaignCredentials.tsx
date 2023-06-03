@@ -30,7 +30,7 @@ export const ActiveCampaignCredentials = ({
       <h2 className="text-xl font-bold mb-4">Credencias de acesso api:</h2>
 
       <label htmlFor="url" className="block mb-2 font-bold text-gray-600">
-        URL ActiveCampaign1:
+        URL ActiveCampaign:
       </label>
 
       <input
