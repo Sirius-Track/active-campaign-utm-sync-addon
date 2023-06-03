@@ -3,7 +3,7 @@ import React from 'react';
 export const Spinner = ({ msg = '' }) => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-2 h-screen">
+      <div className="flex flex-col items-center justify-center gap-4 h-screen">
         {msg && (
           <p className="text-center text-xl font-bold text-gray-700">{msg}</p>
         )}
