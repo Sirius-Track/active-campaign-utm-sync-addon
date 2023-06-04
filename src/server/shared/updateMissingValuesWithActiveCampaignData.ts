@@ -7,29 +7,31 @@ export const updateMissingValuesWithActiveCampaignData = () => {
   const sheet = ss.getActiveSheet();
   const headers = getSheetHeaders();
 
-  const rows = sheet.getDataRange().getValues().slice(1);
-  const rowsWithMissingValues = [];
+  const lastRow = sheet.getLastRow();
+  const emailColumnIndex = headers.indexOf(
+    scriptProperties.getProperty('emailColumn')
+  );
 
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
+  for (let i = 2; i <= lastRow; i++) {
+    const row = sheet.getRange(i, 1, 1, headers.length).getValues()[0];
     const hasMissingValue = row.some((value) => value === '');
-    if (hasMissingValue) rowsWithMissingValues.push({ row, index: i });
+
+    if (hasMissingValue) {
+      const email = row[emailColumnIndex];
+
+      const customColumnFieldValues = getCustomColumnFieldValues(
+        email,
+        scriptProperties
+      );
+
+      customColumnFieldValues.forEach((customColumnFieldValue) => {
+        const columnIndex = headers.indexOf(customColumnFieldValue.fieldName);
+
+        const columnValue = customColumnFieldValue.fieldValue;
+
+        if (columnIndex > -1)
+          sheet.getRange(i, columnIndex + 1).setValue(columnValue);
+      });
+    }
   }
-
-  rowsWithMissingValues.forEach(({ row, index }) => {
-    const email = row[scriptProperties.getProperty('emailColumn')];
-    const customColumnFieldValues = getCustomColumnFieldValues(
-      email,
-      scriptProperties
-    );
-
-    customColumnFieldValues.forEach((customColumnFieldValue) => {
-      const columnIndex = headers.indexOf(customColumnFieldValue.fieldName);
-
-      const columnValue = customColumnFieldValue.fieldValue;
-
-      if (columnIndex > -1)
-        sheet.getRange(index + 2, columnIndex + 1).setValue(columnValue);
-    });
-  });
 };
