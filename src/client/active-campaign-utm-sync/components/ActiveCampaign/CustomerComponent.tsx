@@ -8,7 +8,7 @@ export const CustomerComponent = () => {
       </p>
       <div className="flex justify-between">
         <a
-          href="https://siriustrack.com.br/activeutmsync"
+          href="https://siriustrack.com.br/activecampaign/"
           className="bg-blue-400 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded"
           target="_blank"
         >
