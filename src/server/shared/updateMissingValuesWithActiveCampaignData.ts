@@ -8,9 +8,7 @@ export const updateMissingValuesWithActiveCampaignData = () => {
   const headers = getSheetHeaders();
 
   const lastRow = sheet.getLastRow();
-  const emailColumnIndex = headers.indexOf(
-    scriptProperties.getProperty('emailColumn')
-  );
+  const emailColumnIndex = scriptProperties.getProperty('emailColumn');
 
   for (let i = 2; i <= lastRow; i++) {
     const row = sheet.getRange(i, 1, 1, headers.length).getValues()[0];
