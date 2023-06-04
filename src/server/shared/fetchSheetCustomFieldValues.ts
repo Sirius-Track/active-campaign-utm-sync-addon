@@ -11,13 +11,13 @@ export const fetchSheetCustomFieldValues = ({
   contactId: string;
   scriptProperties: GoogleAppsScript.Properties.Properties;
 }) => {
-  const fieldValues = getCustomFieldValuesForContact(
-    apiUrl,
-    apiToken,
-    contactId
-  );
-
   try {
+    const fieldValues = getCustomFieldValuesForContact(
+      apiUrl,
+      apiToken,
+      contactId
+    );
+
     const savedFields = scriptProperties.getProperties();
     const customColumnKeys = Object.keys(savedFields).filter((key) =>
       /utm|data/gi.test(key)
