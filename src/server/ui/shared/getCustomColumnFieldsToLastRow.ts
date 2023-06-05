@@ -6,17 +6,17 @@ export const getCustomColumnFieldsToLastRow = (
 ) => {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getActiveSheet();
-  const headers = getSheetHeaders();
+  const emailColumn = scriptProperties.getProperty('emailColumn');
 
-  const rows = sheet.getDataRange().getValues();
   const lastRow = sheet.getLastRow();
-  const email =
-    rows[rows.length - 1][scriptProperties.getProperty('emailColumn')];
+  const email = sheet.getRange(lastRow, Number(emailColumn) + 1).getValue();
 
   const customColumnFieldValues = getCustomColumnFieldValues(
     email,
     scriptProperties
   );
+
+  const headers = getSheetHeaders();
 
   customColumnFieldValues.forEach((customColumnFieldValue) => {
     const columnIndex = headers.indexOf(customColumnFieldValue.fieldName);
