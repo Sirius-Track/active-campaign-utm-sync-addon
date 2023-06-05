@@ -37,7 +37,6 @@ export const ActiveCampaign = () => {
       utm_campaign: '',
       utm_term: '',
       utm_content: '',
-      data_criacao: '',
     }
   );
   const [leadList, setLeadList] = useState('');

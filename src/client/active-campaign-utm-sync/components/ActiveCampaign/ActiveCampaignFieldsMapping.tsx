@@ -21,7 +21,6 @@ export interface LocalCustomFields {
   utm_campaign: string;
   utm_term: string;
   utm_content: string;
-  data_criacao: string;
 }
 
 interface ActiveCampaignFormMappingProps {
@@ -44,7 +43,6 @@ export const fieldNames: FieldName[] = [
   'utm_campaign',
   'utm_term',
   'utm_content',
-  'data_criacao',
 ];
 
 export const ActiveCampaignFieldsMapping = ({

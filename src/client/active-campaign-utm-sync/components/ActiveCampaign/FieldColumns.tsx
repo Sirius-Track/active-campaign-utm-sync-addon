@@ -5,8 +5,7 @@ export type FieldName =
   | 'utm_medium'
   | 'utm_campaign'
   | 'utm_term'
-  | 'utm_content'
-  | 'data_criacao';
+  | 'utm_content';
 
 type CustomFields = {
   [key in FieldName]: string;
@@ -34,12 +33,6 @@ export const FieldColumns = ({
 
   const getSelectedOptionId = useCallback(
     (fieldName: FieldName) => {
-      if (fieldName === 'data_criacao') {
-        const option = fetchedCustomFields.find((field) =>
-          field.title.toLowerCase().startsWith('data')
-        );
-        return option?.id || '';
-      }
       const option = fetchedCustomFields.find(
         (field) => field.title === fieldName
       );
