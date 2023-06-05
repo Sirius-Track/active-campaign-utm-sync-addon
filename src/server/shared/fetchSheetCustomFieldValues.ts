@@ -20,7 +20,7 @@ export const fetchSheetCustomFieldValues = ({
 
     const savedFields = scriptProperties.getProperties();
     const customColumnKeys = Object.keys(savedFields).filter((key) =>
-      /utm|data/gi.test(key)
+      /utm/gi.test(key)
     );
 
     return customColumnKeys.map((customColumnKey) => {

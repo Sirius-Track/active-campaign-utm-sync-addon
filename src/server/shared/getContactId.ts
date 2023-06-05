@@ -1,4 +1,4 @@
-export const getContactId = (
+export const getContactInfo = (
   apiUrl: string,
   apiToken: string,
   email: string
@@ -17,7 +17,12 @@ export const getContactId = (
     );
     const json = JSON.parse(response.getContentText());
 
-    if (json.contacts && json.contacts.length > 0) return json.contacts[0].id;
+    if (json.contacts && json.contacts.length > 0)
+      return {
+        id: json.contacts[0].id,
+        cdate: json.contacts[0].cdate,
+        udate: json.contacts[0].udate,
+      };
 
     return null;
   } catch (error) {

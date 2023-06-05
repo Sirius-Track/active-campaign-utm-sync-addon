@@ -1,18 +1,24 @@
 import { getApiUrlAndToken } from './getApiUrlAndToken';
-import { getContactId } from './getContactId';
+import { getContactInfo } from './getContactId';
 import { fetchSheetCustomFieldValues } from './fetchSheetCustomFieldValues';
 
 export const getCustomColumnFieldValues = (email, scriptProperties) => {
   const { apiUrl, apiToken } = getApiUrlAndToken();
 
-  const contactId = getContactId(apiUrl, apiToken, email);
+  const contactInfo = getContactInfo(apiUrl, apiToken, email);
 
-  if (!contactId) return [];
+  if (!contactInfo) return [];
 
-  return fetchSheetCustomFieldValues({
+  const sheetCustomFieldValues = fetchSheetCustomFieldValues({
     apiUrl,
     apiToken,
-    contactId,
+    contactId: contactInfo.id,
     scriptProperties,
   });
+
+  return [
+    ...sheetCustomFieldValues,
+    { fieldName: 'cdate', fieldValue: contactInfo.cdate },
+    { fieldName: 'udate', fieldValue: contactInfo.udate },
+  ];
 };

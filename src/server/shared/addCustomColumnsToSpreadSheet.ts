@@ -8,7 +8,8 @@ export const addCustomColumnsToSpreadSheet = () => {
     'utm_medium',
     'utm_content',
     'utm_term',
-    'data_criacao',
+    'cdate',
+    'udate',
   ];
 
   const headersInSheet = getSheetHeaders();

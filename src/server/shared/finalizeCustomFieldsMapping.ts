@@ -12,7 +12,6 @@ export const finalizeCustomFieldsMapping = (formData: {
     'utm_medium',
     'utm_content',
     'utm_term',
-    'data_criacao',
     'emailColumn',
     'leadList',
     'apiToken',
