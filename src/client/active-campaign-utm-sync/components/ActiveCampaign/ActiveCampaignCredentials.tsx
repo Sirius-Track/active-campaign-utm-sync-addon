@@ -41,7 +41,7 @@ export const ActiveCampaignCredentials = ({
         onChange={(e) =>
           setCredentialsActiveCampaign((prev) => ({
             ...prev,
-            url: e.target.value,
+            url: e.target.value.trim(),
           }))
         }
         placeholder="https://youraccount.api-us1.com"
@@ -64,7 +64,7 @@ export const ActiveCampaignCredentials = ({
         onChange={(e) =>
           setCredentialsActiveCampaign((prev) => ({
             ...prev,
-            apiToken: e.target.value,
+            apiToken: e.target.value.trim(),
           }))
         }
         placeholder="Your API Token"
