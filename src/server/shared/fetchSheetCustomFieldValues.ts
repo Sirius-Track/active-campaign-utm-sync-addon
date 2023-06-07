@@ -32,7 +32,7 @@ export const fetchSheetCustomFieldValues = ({
 
       return {
         fieldName: customColumnKey,
-        fieldValue: fieldValue ? fieldValue.value : 'Empty',
+        fieldValue: fieldValue ? fieldValue.value : 'EMPTY_FIELD_VALUE',
       };
     });
   } catch (error) {
