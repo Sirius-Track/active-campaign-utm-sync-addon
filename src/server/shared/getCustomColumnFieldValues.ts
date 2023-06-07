@@ -7,7 +7,29 @@ export const getCustomColumnFieldValues = (email, scriptProperties) => {
 
   const contactInfo = getContactInfo(apiUrl, apiToken, email);
 
-  if (!contactInfo) return [];
+  const EMAIL_NOT_FOUND_MSG = 'EMAIL_NOT_FOUND_ACTIVE_CAMPAIGN';
+  if (!contactInfo)
+    return [
+      { fieldName: 'cdate', fieldValue: EMAIL_NOT_FOUND_MSG },
+      { fieldName: 'udate', fieldValue: EMAIL_NOT_FOUND_MSG },
+      {
+        fieldName: 'utm_campaign',
+        fieldValue: EMAIL_NOT_FOUND_MSG,
+      },
+      {
+        fieldName: 'utm_source',
+        fieldValue: EMAIL_NOT_FOUND_MSG,
+      },
+      {
+        fieldName: 'utm_medium',
+        fieldValue: EMAIL_NOT_FOUND_MSG,
+      },
+      {
+        fieldName: 'utm_content',
+        fieldValue: EMAIL_NOT_FOUND_MSG,
+      },
+      { fieldName: 'utm_term', fieldValue: EMAIL_NOT_FOUND_MSG },
+    ];
 
   const sheetCustomFieldValues = fetchSheetCustomFieldValues({
     apiUrl,
